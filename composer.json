@@ -1,0 +1,22 @@
+{
+    "name": "Rastemoh/DK-Commerce",
+    "description": "A small e-commerce api built for an interview",
+    "keywords": ["e-commerce", "interview", "Digikala"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "symfony/http-foundation": "^4.1",
+        "symfony/routing": "^4.1",
+        "symfony/http-kernel": "^4.1",
+        "illuminate/database": "^5.7",
+        "symfony/dotenv": "^4.1"
+    },
+    "autoload": {
+        "psr-4": { "App\\": "src/" }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
+        ]
+    }
+}
