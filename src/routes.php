@@ -40,8 +40,12 @@ $postRoutes->add('login', new Routing\Route('/login',
 $postRoutes->add('logout', new Routing\Route('/logout',
     array('_controller' =>  'App\MainController::logout')));
 
+// search
+$getRoutes->add('search', new Routing\Route('/search/{query}',
+    array('_controller' =>  'App\MainController::search')));
+
 $getRoutes->setMethods(array('GET'));
-$postRoutes->setMethods(array('POST'));
+$postRoutes->setMethods(array('POST', 'OPTION'));
 $routes->addCollection($getRoutes);
 $routes->addCollection($postRoutes);
 return $routes;

@@ -10,12 +10,24 @@ namespace App;
 use App\Models\Product;
 use App\Models\Variant;
 use App\Models\User;
+use Predis\Client as RedisClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MainController
 {
+    private $elasticClient;
+    private $redisClient;
+    public function __construct()
+    {
+        $this->elasticClient = new ElasticClient(getenv('ELASTIC_INDEX'), getenv('ELASTIC_TYPE'));
+        $this->redisClient = new RedisClient(['host' => getenv('REDIS_HOST')
+            , 'port' => getenv('REDIS_PORT')
+            , 'database' => getenv('REDIS_DATABASE')
+        ]);
+    }
+
     public function allProducts() : Response
     {
         return $this->response(array('products' => Product::with('variants')->get()->all()));
@@ -55,7 +67,14 @@ class MainController
         if (count($variantsToBeSaved)) {
             $product->variants()->saveMany($variantsToBeSaved);
         }
-        $this->response(compact('product'));
+
+        // indexing to elastic
+        foreach ($variantsToBeSaved as $item) {
+            $object = array("title" => $product->title, "description" => $product->description, "productId" => $product->id,
+                "color" => $item['color'], "price" => $item['price']);
+            $this->elasticClient->insert($object);
+        }
+        return $this->response(compact('product'));
     }
 
     public function addVariant(Request $request, $productId)
@@ -139,9 +158,18 @@ class MainController
         }
     }
 
-    public function search(Request $request)
+    public function search($query)
     {
-
+        $redisKey = $query;
+        $cacheExists = $this->redisClient->exists($redisKey);
+        if ($cacheExists && getenv('CACHE_ENABLED', true)){
+            $result = json_decode($this->redisClient->get($redisKey));
+        } else {
+            $searchParam = ["multi_match" => ["query" => $query, "fields" => ["title", "description", "color", "price"]]];
+            $result = $this->elasticClient->simpleSearch($searchParam);
+            $this->redisClient->set($redisKey, json_encode($result));
+        }
+        return $this->response(compact('result'));
     }
 
     public function registerUser(Request $request): Response
@@ -222,6 +250,6 @@ class MainController
 
     private function checkApiKey($apiKey = null) : bool
     {
-        return true;
+        return true; //todo implement it
     }
 }
