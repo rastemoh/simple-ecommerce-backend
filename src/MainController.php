@@ -66,6 +66,7 @@ class MainController
         }
         if (count($variantsToBeSaved)) {
             $product->variants()->saveMany($variantsToBeSaved);
+            $this->redisClient->flushdb(); // clear all keys
         }
 
         // indexing to elastic
@@ -93,7 +94,11 @@ class MainController
         $variant->color = $color;
         $variant->price = $price;
         $product->variants()->save($variant);
-        $this->response(compact('product'));
+        $object = array("title" => $product->title, "description" => $product->description, "productId" => $product->id,
+            "color" => $color, "price" => $price);
+        $this->elasticClient->insert($object);
+        $this->redisClient->flushdb(); // clear all keys
+        return $this->response(compact('product'));
     }
 
     public function editProduct(Request $request, $productId)
@@ -111,7 +116,8 @@ class MainController
         $product->title = $title;
         $product->description = $description;
         $product->save();
-        $this->response(compact('product'));
+        // todo update elastic and dirty cache
+        return $this->response(compact('product'));
     }
 
     public function editVariant(Request $request, $variantId)
@@ -129,7 +135,8 @@ class MainController
         $variant->color = $color;
         $variant->price = $price;
         $variant->save();
-        $this->response(compact('variant'));
+        // todo update elastic and dirty cache
+        return $this->response(compact('variant'));
     }
 
     public function deleteProduct($productId)
@@ -139,6 +146,7 @@ class MainController
             return $this->error("Product not found", 404);
         }
         if ($product->delete()) {
+            // todo update elastic and dirty cache
             return $this->response(array('message' => 'Successfully deleted'));
         } else {
             return $this->error("Problem deleting the product", 500);
@@ -152,6 +160,7 @@ class MainController
             return $this->error("Variant not found", 404);
         }
         if ($variant->delete()) {
+            // todo update elastic and dirty cache
             return $this->response(array('message' => 'Successfully deleted'));
         } else {
             return $this->error("Problem deleting the variant", 500);
