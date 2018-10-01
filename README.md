@@ -18,4 +18,4 @@ web server (e.g. apache) serves it.
 6. Open the link in a browser with respect to the prefix that your web server adds. 
 (e.g. http://localhost/simple-commerce-backend/public/index.php/products). Or you can use PHP development server by 
 running this command in root of the of project `php -S localhost:[port] -t public/ public/index.php` and then check 
-`curl localhost:[port]/products`
+`curl localhost:[port]/index.html`
