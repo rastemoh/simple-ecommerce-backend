@@ -19,3 +19,22 @@ web server (e.g. apache) serves it.
 (e.g. http://localhost/simple-commerce-backend/public/index.php/products). Or you can use PHP development server by 
 running this command in root of the of project `php -S localhost:[port] -t public/ public/index.php` and then check 
 `curl localhost:[port]/index.html`
+
+# About Structure of the APP
+The backend created using PHP relying on following components:
+- symfony/http-foundation
+- symfony/routing
+- symfony/http-kernel
+- illuminate/database for using Eloquent ORM
+- symfony/dotenv
+- elasticsearch/elasticsearch for connection to elastic
+- predis/predis for connection to redis
+
+Elastic is used for searching in products and variants and Redis is used for caching the search results.
+
+The frontend is built using Angular v6 and uses the PHP provided API. Data transmission is done in JSON format.
+The source of frontend could be found [here](https://github.com/rastemoh/simple-ecommerce-front)
+## Remaining Works:
+- Elasic indices are not updated with all product manipulations. it should be updated on product/variant update/delete.
+- Redis cache should be set as dirty when product is manipulated (e.g. update or delete)
+- API key should be used to authorize administrative tasks (e.g. add/edit products)
