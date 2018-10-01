@@ -46,6 +46,8 @@ $getRoutes->add('search', new Routing\Route('/search/{query}',
 
 $getRoutes->setMethods(array('GET'));
 $postRoutes->setMethods(array('POST', 'OPTION'));
+$getRoutes->addPrefix('/api');
+$postRoutes->addPrefix('/api');
 $routes->addCollection($getRoutes);
 $routes->addCollection($postRoutes);
 return $routes;

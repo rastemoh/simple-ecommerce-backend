@@ -1013,7 +1013,7 @@ var ApiService = /** @class */ (function () {
     function ApiService(http) {
         this.http = http;
         this.token = null;
-        this.baseURL = 'http://localhost/dk-commerce/public/index.php/';
+        this.baseURL = '/api/';
     }
     ApiService.prototype.allProducts = function () {
         var url = this.baseURL + "products";
@@ -1196,7 +1196,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\mbr\Documents\development\dk-commerce-front\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/mofid/dev/simple-ecommerce-front/src/main.ts */"./src/main.ts");
 
 
 /***/ })

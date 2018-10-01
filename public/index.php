@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 use Symfony\Component\HttpKernel;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/../.env');
@@ -25,6 +26,12 @@ if ($request->getMethod() === 'OPTIONS') { // only for CORS requests
     $response = new Response('OK', 200);
     setAccessControlHeader($response);
     return $response->send();
+}
+if(substr($request->getPathInfo(), 0, 4) !== '/api') { // for serving static files
+    $file =  __DIR__.$request->getRequestUri();
+    $response = new BinaryFileResponse($file);
+    $response->send();
+    return;
 }
 try {
     $request->attributes->add($matcher->match($request->getPathInfo()));
