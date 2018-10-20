@@ -104,7 +104,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <h1>List of Products</h1>\n    <a class=\"btn btn-link\" routerLink=\"/product/create\">Add Product</a>\n  </div>\n</div>\n<div class=\"row\">\n  <div class=\"col-3 mb-4\" *ngFor=\"let product of products\">\n    <div class=\"card\">\n      <div class=\"card-body\">\n        <h5 class=\"card-title\">{{product.title}}</h5>\n        <h6 class=\"card-subtitle mb-2 text-muted\">Available in {{product.variants.length}} variants</h6>\n        <p class=\"card-text\">{{product.description}}</p>\n        <a routerLink=\"/product/view\" class=\"card-link\">Details</a>\n        <button class=\"btn btn-danger float-right\" (click)=\"onDelete(product.id)\">Delete</button>\n      </div>\n      <ul class=\"list-group list-group-flush\" *ngIf=\"product.variants && product.variants.length\">\n        <li class=\"list-group-item\" *ngFor=\"let variant of product.variants\">\n          Color: <strong>{{variant.color}}</strong> - Price: <strong>${{variant.price}}</strong>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <h1>List of Products</h1>\n    <a class=\"btn btn-link\" routerLink=\"/product/create\">Add Product</a>\n  </div>\n</div>\n<div class=\"row\">\n  <div class=\"col-3 mb-4\" *ngFor=\"let product of products\">\n    <div class=\"card\">\n      <div class=\"card-body\">\n        <h5 class=\"card-title\">{{product.title}}</h5>\n        <h6 class=\"card-subtitle mb-2 text-muted\">Available in {{product.variants.length}} variants</h6>\n        <p class=\"card-text\">{{product.description}}</p>\n        <a routerLink=\"/product/view/{{product.id}}\" class=\"card-link\">Details</a>\n        <button class=\"btn btn-danger float-right\" (click)=\"onDelete(product.id)\">Delete</button>\n      </div>\n      <ul class=\"list-group list-group-flush\" *ngIf=\"product.variants && product.variants.length\">\n        <li class=\"list-group-item\" *ngFor=\"let variant of product.variants\">\n          Color: <strong>{{variant.color}}</strong> - Price: <strong>${{variant.price}}</strong>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1196,7 +1196,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/mofid/dev/simple-ecommerce-front/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\mbr\Documents\development\dk-commerce-front\src\main.ts */"./src/main.ts");
 
 
 /***/ })

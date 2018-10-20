@@ -580,8 +580,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mofid/dev/simple-ecommerce-front/src/styles.css */"./src/styles.css");
-module.exports = __webpack_require__(/*! /home/mofid/dev/simple-ecommerce-front/node_modules/bootstrap/dist/css/bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
+__webpack_require__(/*! C:\Users\mbr\Documents\development\dk-commerce-front\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\Users\mbr\Documents\development\dk-commerce-front\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
 
 
 /***/ })
